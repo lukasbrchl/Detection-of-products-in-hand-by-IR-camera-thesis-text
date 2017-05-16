@@ -1,0 +1,145 @@
+% options:
+% thesis=B bachelor's thesis
+% thesis=M master's thesis
+% czech thesis in Czech language
+% slovak thesis in Slovak language
+% english thesis in English language
+% hidelinks remove colour boxes around hyperlinks
+
+\documentclass[thesis=B,czech]{FITthesis}[2012/06/26]
+
+\usepackage[utf8]{inputenc} % LaTeX source encoded as UTF-8
+
+\usepackage{graphicx} %graphics files inclusion
+% \usepackage{amsmath} %advanced maths
+% \usepackage{amssymb} %additional math symbols
+
+\usepackage{dirtree} %directory tree visualisation
+\usepackage{subfig} %image side by side
+\usepackage{todonotes} %todo
+\usepackage{url}
+\usepackage{textcomp} %degree symbol
+\usepackage{color, colortbl} %color, table color
+\usepackage{enumitem} %lists
+\usepackage{float} %for H option in figures
+\usepackage{array} %table aligment       
+\usepackage{amsmath} %cases
+\usepackage{svg} %svg
+\usepackage{scrextend}
+\usepackage{multirow}
+\addtokomafont{labelinglabel}{\sffamily}
+
+
+
+\setlength{\fboxsep}{0.005pt}
+\newcommand{\tmpframe}[1]{\fbox{#1}}
+%\renewcommand{\tmpframe}[1]{#1}
+
+% % list of acronyms
+% \usepackage[acronym,nonumberlist,toc,numberedsection=autolabel]{glossaries}
+% \iflanguage{czech}{\renewcommand*{\acronymname}{Seznam pou{\v z}it{\' y}ch zkratek}}{}
+% \makeglossaries
+
+\newcommand{\tg}{\mathop{\mathrm{tg}}} %cesky tangens
+\newcommand{\cotg}{\mathop{\mathrm{cotg}}} %cesky cotangens
+
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\definecolor{Blue}{rgb}{0.30980, 0.50588, 0.73725}
+\definecolor{White}{rgb}{1, 1, 1}
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% ODTUD DAL VSE ZMENTE
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+
+\department{Katedra teoretické informatiky}
+\title{Detekce zboží v~ruce zákazníka pomocí analýzy snímků z~termokamery}
+\authorGN{Lukáš} %(křestní) jméno (jména) autora
+\authorFN{Brchl} %příjmení autora
+\authorWithDegrees{Lukáš Brchl} %jméno autora včetně současných akademických titulů
+\supervisor{doc. RNDr. Ing. Marcel Jiřina, Ph.D.}
+\acknowledgements{Tímto bych chtěl hlavně poděkovat svému vedoucímu práce doc. Marcelu Jiřinovi za~všechny poskytnuté rady a možnost průběžných konzultací během práce. Dále pak Ing.~Jakubovi Novákovi za pomoc při řešení nesnází s~termokamerou.
+
+Děkuji i své rodině za podporu při studiu a v neposlední řadě také děkuji Michaele Dvořákové, Ing. Iljovi Mašíkovi a Ing. Michaele Čížkové za typografické připomínky.}
+
+\abstractCS{
+Tato práce se zabývá detekcí zboží v~ruce zákazníka pomocí analýzy snímků z~termokamery. Kamera je umístěna nad regálem, kde snímá oblast bezprostředního dění před ním. Snímaná data z~kamery obsahují informace o~teplotách jednotlivých předmětů na scéně. Pomocí teplotních dat je následně možné na~snímcích segmentovat ruku a~zkoumat, zda se na scéně vyskytuje zboží. Cílem práce je průzkum možných řešení této úlohy, návrh vlastního řešení a~následně jeho implementace. V~práci je k~problému přistupováno více způsoby a je navrženo několik možných řešení. Pro snímání dat je použita termokamera FLIR A65 se sadou nástrojů eBUS SDK. Algoritmy jsou implementovány v~jazyce Java s~využitím knihovny OpenCV. Vyhodnocený algoritmus dynamického odčítání pozadí dosahuje celkové klasifikační přesnosti 88~\%.}
+
+
+
+\abstractEN{This thesis deals with the detection of goods in the customer’s hand by analyzing images from infrared camera. The camera is located above the shelf, monitoring behavior of the customer standing in front of it. Acquired data contains informations about the temperature of the objects in the view. Using these temperature data, it is possible to segment hand and examine the presence of the goods on the scene. The aim of the thesis is to explore possible solutions of this task, to propose a solution and subsequently implement it. There are several approaches to the problem and several possible solutions are proposed. The FLIR A65 thermal camera with the eBUS SDK tool is used to capture data. The algorithms are implemented in Java using the OpenCV library. The evaluated background subtraction algorithm achieves an overall classification accuracy of 88 \%.
+}
+\placeForDeclarationOfAuthenticity{V~Praze}
+\declarationOfAuthenticityOption{5} %volba Prohlášení (číslo 1-6)
+\keywordsCS{segmentace obrazu, segmentace ruky, klasifikace, počítačové vidění, strojové učení, termokamera, FLIR, OpenCV, Java\newpage}
+
+\keywordsEN{image segmentation, hand segmentation, classification, computer vision, machine learning, infrared camera, FLIR, OpenCV, Java}
+%\website{http://site.example/thesis} %volitelná URL práce, objeví se v tiráži - úplně odstraňte, nemáte-li URL práce
+
+\begin{document}
+\input{00_uvod.tex}
+\input{01_termokamera.tex}
+\input{02_analyza.tex}
+\input{03_navrhy_reseni.tex}
+\input{04_zvolene_reseni.tex}
+\input{05_implementace.tex}
+\input{06_zhodnoceni.tex}
+\input{07_zaver.tex}
+
+\bibliographystyle{csn690}
+\bibliography{ref}
+
+\appendix
+
+\chapter{Seznam použitých zkratek}
+% \printglossaries
+\begin{description}
+	\item[AIA] Automated Imaging Association
+	\item[BSD] Berkeley Software Distribution
+    \item[CIE] International Commission on Illumination
+
+    \item[EMVA] European Machine Vision Association
+    \item[FPS] Frames per second
+    \item[FPA] Focal Plane Array
+    \item[GBT] Gradient boosted trees
+    \item[GUI] Graphical user interface
+    \item[HMM] Hidden Markov Model
+
+	
+    \item[IR] Infrared
+
+	\item[MOG] Mixture of gaussians
+    \item[NUC] Non-Uniformity Correction 
+
+	\item[PoE] Power over Ethernet
+    \item[UDP] User Datagram Protocol
+
+	\item[SVM] Support vector machines
+    
+	\item[RGB] Red, Green, Blue
+	\item[UV] Ultraviolet
+	\item[XML] Extensible markup language
+\end{description}
+
+\chapter{Obsah přiloženého média}
+
+%upravte podle skutecnosti
+
+\begin{figure}
+	\dirtree{%
+		.1 readme.txt\DTcomment{stručný popis obsahu přiloženého média}.
+		.1 src.
+		.2 impl\DTcomment{adresář s~implementovanými nástroji}.
+        .3 eBUSPlayer\DTcomment{zdrojové kódy upravené aplikace eBUS Player}.
+        .3 ThesisProject\DTcomment{zdrojové kódy hlavní aplikace s~algoritmy}.
+        .3 FlirBinaryViewer\DTcomment{zdrojové kódy nástroje pro prohlížení a anotování snímků}.
+		.2 thesis\DTcomment{zdrojová forma práce ve formátu \LaTeX{}}.
+		.1 text\DTcomment{text práce}.
+		.2 thesis.pdf\DTcomment{text práce ve formátu PDF}.
+        .1 image\_examples\DTcomment{několik ukázkových snímků z~termokamery}.
+        .1 dataset\DTcomment{složka s~vyhodnocovaným datasetem}.
+	}
+\end{figure}
+
+\end{document}
