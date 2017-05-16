@@ -1,8 +1,8 @@
 \chapter{Zvolené řešení a jeho vyhodnocení}\label{chapter:choosen_solution}
 Finálním vybraným řešením pro vyhodnocení je řešení s~termokamerou a algoritmem dynamického odčítání pozadí. Detaily algoritmu jsou uvedeny v~\ref{section:background_substract_solution} a zde je uvedeno pouze jeho stručné shrnutí. 
 
-\section{Shrnutí řešení}
-V~paměti je průběžně aktualizováno pozadí vůči kterému se vyhodnocuje právě načtený snímek. V~případě, že je snímek detekován jako pozadí, aktualizuje se s~jeho pomocí to v~paměti. V~opačném případě je získané popředí snímku, na kterém se dále segmentuje ruka. Pomocí invertované masky ruky je získáno popředí bez ruky, na kterém proběhne redukce artefaktů ve formě šumu a jako poslední krok je výpočet atributů pro klasifikaci.
+\section{Shrnutí vyhodnocovaného řešení}
+V~paměti je průběžně aktualizováno pozadí, vůči kterému se vyhodnocuje právě načtený snímek. V~případě, že je snímek detekován jako pozadí, aktualizuje se s~jeho pomocí to v~paměti. V~opačném případě je získané popředí snímku, na kterém se dále segmentuje ruka. Pomocí invertované masky ruky je získáno popředí bez ruky, na kterém proběhne redukce artefaktů ve formě šumu a jako poslední krok je výpočet atributů pro klasifikaci.
 
 \section{Volba atributů}\label{section:attributes}
 Pro řešení bylo zvoleno celkem 20 atributů zaměřující se na vlastnosti kontur. Atributy související s~jasem, histogramem a podobnými vlastnostmi obrazu nebyly použity, protože výstup z~kamery se v~čase mění a není možné zajistit jeho stabilitu.
@@ -58,9 +58,9 @@ Atributy vypočítávané na všech nalezených konturách jsou:
 
 
 \section{Rozdělení snímků do tříd}
-Před klasifikaci, je nejdříve nutné snímky rozdělit do několika skupin. Klasifikačními skupinami jsou prázdná ruka a ruka se zbožím, ale pro správnou funkčnost uvedeného algoritmu je ještě nutné v~paměti uchovávat pozadí. Čím více snímků pozadí bude při vyhodnocování k~dispozici, tím budou výsledky přesnější.
+Před klasifikací je nejdříve nutné snímky rozdělit do několika skupin. Klasifikačními skupinami jsou prázdná ruka a ruka se zbožím, ale pro správnou funkčnost uvedeného algoritmu je ještě nutné v~paměti uchovávat pozadí. Čím více snímků pozadí bude při vyhodnocování k~dispozici, tím budou výsledky přesnější.
 
-Snímky jsou uchovávány jako binární soubory obsahující data v~podobě signálů, takže je nutno vytvořit speciální aplikaci pro jejich zobrazení a následné rozřazení do tříd. Pomocí této aplikace bylo ručně anotováno celkem 910 snímků prázdné ruky a 973 snímků ruky se zbožím. Všechna anotovaná pozadí byla získána pomocí aplikace s~algoritmy a ručně zkontrolovány pomocí aplikace pro anotování. Těchto pozadí je celkem 2173.
+Snímky jsou uchovávány jako binární soubory obsahující data v~podobě signálů, takže je nutno vytvořit speciální aplikaci pro jejich zobrazení a následné rozřazení do tříd. Pomocí této aplikace bylo ručně anotováno celkem 910 snímků prázdné ruky a 973 snímků ruky se zbožím. Všechna anotovaná pozadí byla získána pomocí aplikace s~algoritmy a ručně zkontrolovány pomocí aplikace pro anotování. Těchto snímků pozadí je celkem 2173.
 
 Navzdory tomu, že byly při práci využity dvě kamery, budou klasifikovány snímky pouze z~kamery (13 mm). Je to z~toho důvodu, že v~nasnímaných datasetech kamery (25 mm) se vyskytuje množství chyb, které vznikaly nevypočitatelně, kvůli její technické závadě. 
 
@@ -68,7 +68,7 @@ Celkem se tedy bude vyhodnocovat 1244 anotovaných snímků z~kamery (13 mm), z~
 
 
 \section{Klasifikace}
-Před samotnou klasifikací jsou ještě jednotlivé hodnoty atributů normalizovány. Následně je spouštěna detekce anomálií a z~datasetu jsou některé záznamy odstraněny. Odstraněni probíhá pokud se součet délek kontur přibližuje celkové možné ploše obrazového pole. Tyto záznamy jsou očividně chybné a vznikají nejčastěji ihned po NUC, kdy ještě není dostatečně aklimatizováno uložené pozadí a při operaci odčítání pozadí se celý snímek bere jako popředí (ilustrováno v~předchozí kapitole \ref{section:background_substract_problems}). Tyto případy jsou považovány za chyby měření a jsou odstraněny.
+Před samotnou klasifikací jsou ještě jednotlivé hodnoty atributů normalizovány. Následně je spouštěna detekce anomálií a z~datasetu jsou některé záznamy odstraněny. Odstraněni probíhá, pokud se součet délek kontur přibližuje celkové možné ploše obrazového pole. Tyto záznamy jsou očividně chybné a vznikají nejčastěji ihned po NUC, kdy ještě není dostatečně aklimatizováno uložené pozadí a při operaci odčítání pozadí se celý snímek bere jako popředí (ilustrováno v~předchozí kapitole \ref{section:background_substract_problems}). Tyto případy jsou považovány za chyby měření a jsou odstraněny.
 
 Ke klasifikaci je využit program RapidMiner, který poskytuje velké množství různých klasifikátorů a ostatních užitečných nástrojů pro data mining. 
 
@@ -113,7 +113,7 @@ K~vyhodnocení výsledků je použita 10-násobná křížová validace (10-fold
 \end{table}
 
 \section{Příklady klasifikovaných snímků}
-V~této části je uvedeno několik názorných příkladů klasifikace, tak jak je určila neuronová síť. Pro větší názornost jsou tyto snímky již předzpracovány. Na jednotlivých snímcích si lze též všimnout, jak se snímané prostředí poměrně zásadně mění. Jsou uvedeny příklady správně klasifikovaných ( \ref{fig:empty_hand_correct}, \ref{fig:hand_with_goods_correct}), ale i chybně klasifikovaných (\ref{fig:empty_hand_wrong}, \ref{fig:hand_with_goods_wrong}). 
+V~této části je uvedeno několik názorných příkladů klasifikace, tak jak je určila neuronová síť. Pro větší názornost jsou tyto snímky již předzpracovány. Na jednotlivých snímcích si lze též všimnout, jak se snímané prostředí poměrně zásadně mění. Jsou uvedeny příklady správně klasifikovaných (\ref{fig:empty_hand_correct}, \ref{fig:hand_with_goods_correct}), ale i chybně klasifikovaných (\ref{fig:empty_hand_wrong}, \ref{fig:hand_with_goods_wrong}). 
 
 \begin{figure}[h]
   \centering
@@ -143,8 +143,8 @@ V~této části je uvedeno několik názorných příkladů klasifikace, tak jak
   \label{fig:hand_with_goods_wrong}
 \end{figure} 
 
-	\subsection{Komentář ke klasifikaci snímků}
-    Obecně by mělo být snadné detekovat ruku, protože na její teplotu se dá vždy spolehnout. Problém nastává při jejím rychlém pohybu, kdy pohybová neostrost zabrání jejímu správnému segmentování. Většina chybně klasifikovaných rukou jsou pohybově neostré snímky, případně snímky před kterými došlo ke změně pozadí, kdy se uložené pozadí ještě nestihlo adaptovat této změně.
+	\section{Komentář ke klasifikovaným snímkům}
+    Obecně by mělo být snadné detekovat ruku, protože na její teplotu se dá vždy spolehnout. Problém nastává při jejím rychlém pohybu, kdy pohybová neostrost zabrání jejímu správnému segmentování. Většina chybně klasifikovaných rukou jsou pohybově neostré snímky, případně snímky, před kterými došlo ke změně pozadí, kdy se uložené pozadí ještě nestihlo adaptovat této změně.
     
     Z~chybně klasifikovaných snímků ruky se zbožím je zřejmé, že některé zboží mělo teplotu podobnou podlaze a na snímku je velmi obtížně rozlišitelné. Druhým případem je zboží, které je sice viditelné, ale má menší rozměry, takže po aplikaci morfologických operací již není rozpoznatelné.
 

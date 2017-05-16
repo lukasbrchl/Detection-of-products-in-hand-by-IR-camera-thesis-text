@@ -85,7 +85,7 @@ Základní a nejednoduší dělení termokamer je podle přítomnosti ovládací
 \begin{figure}[h]
   \centering
   \includegraphics[width=1\textwidth]{images/konstrukce_kamery.png}
-  \caption{Jednoduché schéma součástí termokamery \cite{konstrukcetermokamery}}
+  \caption{Jednoduché schéma hlavních konstrukčních částí termokamery \cite{konstrukcetermokamery}}
   \label{fig:thermal_camera_scheme}
 \end{figure}
     
@@ -140,7 +140,7 @@ Seznam důležitých parametrů ovlivňující klíčovou funkčnost a možnosti
       Rozlišení detektoru & 240 $\times$ 180 pixelů &  Obecně platí, že vyšší je lepší. \\  \hline
       Typ detektoru & nechlazený FPA & Chlazený (kvantový) nebo nechlazený, více v~\ref{description:detector_types}.\\  \hline
       Snímané spektrum & LWIR, MWIR & Snímaná část IR spektra, více v~\ref{sec:ir_radiation}. \\ \hline
-      Obnovovací frekvence & 30 Hz &  Počet snímků, které je kamera schopna za vteřinu pořídit. \\ \hline
+      Obnovovací frekvence & 30 Hz &  Počet snímků, které je kamera schopna za vteřinu pořídit (FPS). \\ \hline
       Rozsah měřených teplot & 0 - 320 \textdegree{}C & Často více možných voleb v~souvislosti s~režimem kamery \\ \hline
       Úhel záběru & 20\textdegree{} $\times$ 25\textdegree{} & Často uváděná také ohnisková vzdálenost \\ \hline
       Citlivost (NETD) & 50 K, 0.05 \textdegree{}C & Vyjadřuje, jaké nejmenší teplotní rozdíly je na povrchu černého tělesa termokamera schopna zaznamenat. \\ \hline
@@ -153,8 +153,8 @@ Seznam důležitých parametrů ovlivňující klíčovou funkčnost a možnosti
     \label{table:thermal_camera_features}
 \end{table}
     
-    \subsection{Aklimatizace kamery}
-     Aklimatizace kamery znamená dobu ustálení, kterou termokamera potřebuje, aby zaznamenávala co nejpřesnější výsledky. V~praxi to znamená stabilizování teploty detektoru na předem danou hodnotu, běžně kolem 30 \textdegree{}C u~nechlazených detektorů. Dostat se a udržovat stabilní teplotu detektoru má na starosti speciální vnitřní obvod. Tento údaj u~některých termokamer není uvedený a~přitom se dá považovat za velmi důležitý.
+    
+    Dalším velmi důležitým parametrem je aklimatizace kamery. Tento údaj není ve specifikacích často uváděn a~přitom je pro měření klíčový. Aklimatizace kamery znamená dobu ustálení, kterou termokamera potřebuje, aby zaznamenávala co nejpřesnější výsledky. V~praxi to znamená stabilizování teploty detektoru na předem danou hodnotu, běžně kolem 30 \textdegree{}C u~nechlazených detektorů. Dostat se a udržovat stabilní teplotu detektoru má na starosti speciální vnitřní obvod. 
 
 \section{Získávání dat} \label{section:retrieving_camera_data}
 Práce se stacionární termokamerou probíhá o~něco složitějším způsobem než je proti ručním kamerám zvykem. Kamera nemá žádné interní úložiště, display ani ovládací prvky. Všechna práce, jako je ovládání kamery a~získávání dat, probíhá pomocí síťového rozhraní a je řízena počítačem. \cite{kuvzel2010bezkontaktni}

@@ -16,7 +16,7 @@ K~nastavování parametrů algoritmů slouží čtyři záložky, které jsou ro
 
     Celé uživatelské rozhraní zastřešuje ovladač MainController, který deleguje požadavky uživatele dál k~příslušným třídám. Tyto požadavky jsou nejčastěji na aktuálně využívaný obrazový detektor (AbstractDetector), aktuálně čtený zdroj (DataReciever) nebo na změnu nastavení parametrů algoritmu uložených v~paměti (Settings).    
     
-	\subsubsection{AbstractDetector}
+	\subsection{AbstractDetector}
     Třída AbstractDetector je předek všech obrazový detektorů s~abstraktní metodou detect(). Potomci této třídy jsou celkem 3 a to: 
     \begin{description}
     \item [BackgroundDetector] slouží pro detekování snímků pozadí a jejich následné ukládání do definované složky.
@@ -32,7 +32,7 @@ K~nastavování parametrů algoritmů slouží čtyři záložky, které jsou ro
       \label{fig:ea_class_detector}
     \end{figure} 
     
-    \subsubsection{DataReciever}
+    \subsection{DataReciever}
     Pro příjem dat z~více zdrojů slouží abstraktní generická třída DataReciever. Jedním z~potomků této třídy je FlirDataReciever, který je využíván pro příjem dat z~termokamery a druhým potomkem je třída pro příjem z~webkamery nebo jiné USB kamery. Obě třídy implementují funkčnost ukládání a načtení snímků z~úložiště.
 
     \begin{figure}[h]
@@ -42,7 +42,7 @@ K~nastavování parametrů algoritmů slouží čtyři záložky, které jsou ro
       \label{fig:ea_class_reciever}
     \end{figure} 
     
-    \subsubsection{Settings}
+    \subsection{Settings}
     V~paměti aplikace je uchováváno aktuální nastavení parametrů využívaných algoritmů. Tyto nastavení jsou rozděleny do čtyř skupin:
     \begin{description}
     \item [PreviewSettings] slouží k~aktivaci efektů algoritmů na náhledový snímek.
@@ -59,8 +59,8 @@ K~nastavování parametrů algoritmů slouží čtyři záložky, které jsou ro
       \label{fig:ea_settings}
     \end{figure} 
 
-	\subsubsection{Práce s~obrazem}
-    Poslední částí která stojí za zmínku je balíček image, jehož obsahem jsou dvě statické třídy MatOperations a ImageConvertor. Třída MatOperations je pomocná třída pro práci s~OpenCV maticemi, která a obsahuje volání knihovny, ale oproti běžnému volání nikdy nemodifikuje vstupní data. ImageConvertor obsahuje optimalizované metody pro převod mezi binárními daty, OpenCV maticemi a JavaFX obrázkem.
+	\subsection{Práce s~obrazem}
+    Poslední částí, která stojí za zmínku je balíček image, jehož obsahem jsou dvě statické třídy MatOperations a ImageConvertor. Třída MatOperations je pomocná třída pro práci s~OpenCV maticemi, která obsahuje volání knihovny, ale oproti běžnému volání nikdy nemodifikuje vstupní data. ImageConvertor obsahuje optimalizované metody pro převod mezi binárními daty, OpenCV maticemi a JavaFX obrázkem.
 
     \begin{figure}[h]
       \centering

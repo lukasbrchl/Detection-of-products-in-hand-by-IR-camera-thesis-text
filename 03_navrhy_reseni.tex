@@ -174,10 +174,10 @@ Výsledný snímek hran zboží vznikne jako binární součet snímku hran a~in
 \end{figure} 
 
     \subsection{Problémy}
-    Toto řešení se mimo jiné ukázalo jako velmi citlivé na pohyb ruky. V~případě, že se ruka pohybuje rychle, na snímku se projeví pohybová neostrost. Po segmentaci ruky na snímku zůstane právě tato rozmazaná oblast, protože jasově neodpovídá ruce a není tedy segmentována. Následně se tyto zbylé části rozmazané ruky po aplikaci Cannyho detektoru jeví jako hrany zboží a tyto snímky jsou chybně klasifikovány. Tento jev je ilustrován na obrázku \todo{}. Problém s~nadbytečnými hranami způsobuje i záře, která se vyskytuje kolem ruky.
+    Toto řešení se mimo jiné ukázalo jako velmi citlivé na pohyb ruky. V~případě, že se ruka pohybuje rychle, na snímku se projeví pohybová neostrost, která díky nižší jasové hodnotě než má ruka, není segmentována. Následně se po aplikaci Cannyho detektoru jeví artefakty pohybové neostrosti ruky jako hrany zboží a tyto snímky jsou chybně klasifikovány. Problém s~nadbytečnými hranami způsobuje i záře, která se vyskytuje kolem ruky.
 
 	\subsection{Vyhodnocení}
-    Výsledky tohoto řešení se pohybovali v~rozmezí 65 - 75 \% celkové přesnosti klasifikace v~závislosti na použitém klasifikátoru. Detailnější informace nejsou dále diskutovány, protože toto řešení nebylo shledáno jako ideální a bylo navrženo lepší, které je následně detailněji vyhodnoceno.
+    Výsledky tohoto řešení se pohybovali v~rozmezí 65 - 75 \% celkové přesnosti klasifikace v~závislosti na použitém klasifikátoru. Detailnější informace nejsou dále diskutovány, protože toto řešení nebylo shledáno jako konečné a bylo navrženo lepší, které je následně detailněji vyhodnoceno.
          
 \clearpage
 
@@ -220,14 +220,14 @@ Na oddělené fragmenty obrazu jsou dále v~několika krocích vhodně apliková
 \end{figure} 
 
 	\subsection{Úskalí řešení} \label{section:background_substract_problems}
-    Největší nevýhodou tohoto řešení je, že je silně závislé na uloženém pozadí v~paměti. V~případě, že proběhně NUC kalibrace a do paměti se nestačí načíst dostatečný počet snímků nového pozadí, proběhne operace odečtení pozadí chybně. V~tomto případě jsou pak vypočteny nesmyslné hodnoty atributů, protože se jako zboží  tváří skoro celá oblast snímku. Pro ilustraci je tento případ zobrazen v~obrázku \ref{fig:camera_2_apply_mog_after_nuc}.
+    Největší nevýhodou tohoto řešení je, že je silně závislé na uloženém pozadí v~paměti. V~případě, že proběhne NUC kalibrace a do paměti se nestačí načíst dostatečný počet snímků nového pozadí, proběhne operace odečtení pozadí chybně. V~tomto případě jsou pak vypočteny nesmyslné hodnoty atributů, protože se jako zboží  tváří skoro celá oblast snímku. Pro ilustraci je tento případ zobrazen v~obrázku \ref{fig:camera_2_apply_mog_after_nuc}.
     
     Dalším problémem je, stejně jako v~algoritmu \ref{section:edge_detection_solution}, rychlý pohyb ruky při kterém se projevuje pohybová neostrost, která rozšiřuje pomyslnou oblast zboží.
     
     \begin{figure}[h]
       \centering
       \includegraphics[width=0.8\textwidth]{images/camera_2_apply_mog_after_nuc.png}
-      \caption{Chybné odečtení pozadí kvůli změně expozice aktuálního snímku}
+      \caption{Chybně získané popředí kvůli změně expozice aktuálního snímku}
       \label{fig:camera_2_apply_mog_after_nuc}
 	\end{figure} 
 
@@ -244,19 +244,19 @@ V~tomto ohledu by bylo lepší využít klasickou kameru s~viditelným spektrem 
 Pro otestování tohoto řešení byla využita externí RGB webkamera a ukázalo se, že toto řešení přináší dva velmi podstatné problémy.
 
     \subsection{Synchronizace kamer}
-    Prvním problémem je sladění snímků z~různých kamer. Kamery spolu nejsou nijak propojeny a tak procesorové hodiny tikají na každé kameře jinak. Pořizované snímky v~čase jsou rozdílné a je možné nalézt snímky, které při pohybu ruky neodpovídají žádným snímkům z~druhé kamery. Jednoduše řečeno, kamery nemají synchronizované snímání a tak je u~každé kamery snímek vyhotoven v~jiný čas. Navíc u~toho u~termokamery vstupuje NUC (\ref{section:nuc}), při kterém kamera žádné snímky nepřenáší a občas se objevují i chyby přenosu (\ref{section:transmissio_errors}, kdy požadovaný snímek nemusí být vůbec obdržen. 
+    Prvním problémem je sladění snímků z~různých kamer. Kamery spolu nejsou nijak propojeny a tak procesorové hodiny tikají na každé kameře jinak. Pořizované snímky v~čase jsou rozdílné a je možné nalézt snímky, které při pohybu ruky neodpovídají žádným snímkům z~druhé kamery. Jednoduše řečeno, kamery nemají synchronizované snímání a tak je u~každé kamery snímek vyhotoven v~jiný čas. Navíc u~toho u~termokamery vstupuje kalibrace NUC, při které kamera žádné snímky nepřenáší a občas se objevují i chyby přenosu, kdy požadovaný snímek nemusí být vůbec obdržen. 
 
     Snímky nelze přesně synchronizovat již po přijmutí z~kamer, protože by tímto způsobem vznikalo mnohem více chyb a výsledný algoritmus by byl méně přesný než v~případě jedné kamery.
 
     Synchronizaci snímků je možné řešit pouze hardwarově. Některé průmyslové kamery bývají vybaveny konektory, které slouží právě k~synchronizaci více kamer. Je možné propojit několik kamer, kdy synchronizace snímání probíhá vůči jedné vybrané kameře (master, slave režim). Synchronizaci je možné konfigurovat pomocí protokolu GenICam. Termokamera dostupná v~práci má k~dispozici synchronizační konektor, ale nebyla k~dispozici druhá kamera, která by s~ní byla kompatibilní.
 
-	\subsection{Perspektiva snímků} \todo{upravit}
-    Druhým problémem je rozdílná perspektiva snímků. Různé kamery nikdy nebudou mít stejnou optickou soustavu díky optickým vadám a často se liší i v~ohniskové vzdálenosti. Tyto skutečnosti pak ovlivňují výsledné zarovnání snímků z~termokamery a běžné kamery. Na obrázku \ref{fig:webcam_sample} lze nejdříve vidět rozměrově neupravený snímek z~webkamery, který je následně oříznutý na oblast termokamery \ref{fig:visible_cropped_to_thermal}. V~posledním obrázku \ref{fig:visible_thermal_combined} jsou oba snímky prolnuty a lze snadno pozorovat, že i přes stejnou scénu na sebe snímky, právě díky rozdílné perspektivě, nesedí.
+	\subsection{Perspektiva snímků}
+    Druhým problémem je rozdílná perspektiva snímků. Různé kamery nikdy nebudou mít stejnou optickou soustavu. Tento fakt je způsoben různými optickým vadami objektivů a často se objektivy liší i v~ohniskové vzdálenosti. Tyto skutečnosti pak ovlivňují výsledné zarovnání snímků. Na obrázku \ref{fig:webcam_sample} lze nejdříve vidět rozměrově neupravený snímek z~webkamery, který je následně oříznutý na oblast termokamery \ref{fig:visible_cropped_to_thermal}. V~posledním obrázku \ref{fig:visible_thermal_combined} jsou oba snímky prolnuty a lze snadno pozorovat, že i přes stejnou scénu na sebe snímky, právě díky rozdílné perspektivě, nelze přesně zarovnat.
 
     \begin{figure}[h]
       \centering
       \includegraphics[width=0.6\textwidth]{images/webcam_sample.png}
-      \caption{Ukázkový snímek zabíraného obrazového pole webkamery}
+      \caption{Ukázkový snímek snímaného obrazového pole webkamery}
       \label{fig:webcam_sample}
     \end{figure} 
 
@@ -270,7 +270,7 @@ Pro otestování tohoto řešení byla využita externí RGB webkamera a ukázal
     \begin{figure}[h]
       \centering
       \includegraphics[width=0.9\textwidth]{images/visible_thermal_combined.png}
-      \caption{Sloučené snímky z~obou kamer}
+      \caption{Ručně sloučené snímky z~webkamery a termokamery}
       \label{fig:visible_thermal_combined}
     \end{figure} 
 
@@ -282,7 +282,7 @@ Pro otestování tohoto řešení byla využita externí RGB webkamera a ukázal
     \begin{figure}[h]
       \centering
       \includegraphics[width=0.9\textwidth]{images/visible_thermal_detection_diagram.png}
-      \caption{Vývojový diagram algoritmu využívající kombinace běžného a termálního snímku}
+      \caption{Vývojový diagram algoritmu využívající kombinace běžného a termografického snímku}
       \label{fig:visible_thermal_detection_diagram}
     \end{figure} 
 
