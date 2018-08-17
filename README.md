@@ -1,10 +1,11 @@
-# Bakalářská práce - detekce zboží v ruce zákazníka pomocí analýzy snímků z termokamery
+# Bachelor thesis text sources for Detection of products in hand by IR camera
 
-Obsahem tohoto repozitáře jsou zdrojové kódy v TeX formátu a výsledný text práce v PDF.
+This repository contains TeX sources and generated [PDF output](thesis.pdf) related to my Bachelor thesis. The work was done in the Improlab (https://improlab.fit.cvut.cz/) at FIT CTU in Prague and the IR camera used was FLIR A65. The thesis is written in Czech language. 
 
-Součástí vyhotovené bakalářské práce jsou tři aplilace:
-* modifikovaný eBUS Player pro programový přístup k termokameře FLIR A65 - https://github.com/brchlluk/Modified-eBUS-Player,
-* aplikace s detekčními algoritmy sloužící též jako klientská aplikace pro příjem dat z eBUS Playeru - https://github.com/brchlluk/ThesisProject,
-* prohlížeč a anotátor nasnímaných dat uchovávaných v binární podobě - https://github.com/brchlluk/FLIR-image-viewer.
+There were 3 desktop applications created as part of the thesis:
+* Main application with all detection and processing algorithms which was also used as client recieving raw temperature data from FLIR camera (using modified eBUS Player) - https://github.com/brchlluk/ThesisProject.
+* FLIR A65 raw image viewer which also have functionality to label images - https://github.com/lukasbrchl/FLIR-camera-image-viewer-and-labeling.
+* Modified eBUS Player which allows to read raw temperature data from GigE cameras and send them through the socket - https://github.com/brchlluk/Modified-eBUS-Player.
 
-Práce probíhala v Laboratoři zpracování obrazu FIT ČVUT v Praze.
+![shelf setup image](images/shelf_setup.jpg) ![camera setup scheme](images/camera_setup_scheme.png) 
+
